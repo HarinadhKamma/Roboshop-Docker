@@ -1,0 +1,10 @@
+services:
+  mongodb:
+   image: mongodb:v1
+
+
+networks:
+  default: 
+    driver: bridge
+    name: roboshop
+    external: false # if you allready created a network by using create network you can set as true.If not proivde the value  as false
