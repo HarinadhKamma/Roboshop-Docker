@@ -1,20 +1,24 @@
 services:
   mongodb:
-   image: mongodb:v1
+   build: ./mongodb
+   image: learninghariaws/mongodb:v1
    container_name: mongodb
    volumes:
      - mongodb:/data/db
   mysql:
-   image: mysql:v1
+   build: ./mysql
+   image: learninghariaws/mysql:v1
    container_name: mysql
    volumes:
      - mysql:/var/lib/mysql
   redis:
+    build: ./redis
     image: redis:7.0
     container_name: redis
     volumes:
       - redis:/data
   rabbitmq:
+    build: rabbitmq
     image: rabbitmq:3
     container_name: rabbitmq
     volumes:
@@ -23,32 +27,37 @@ services:
        RABBITMQ_DEFAULT_USER: roboshop 
        RABBITMQ_DEFAULT_PASS: roboshop123
   user:
-    image: user:v1
+    build: ./user
+    image: learninghariaws/user:v1
     container_name: user
     depends_on:
      - mongodb
      - redis
   cart:
-   image: cart:v1
+   build: ./cart
+   image: learninghariaws/cart:v1
    container_name: cart
    depends_on:
    - catalogue
    - redis
   shipping:
-    image: shipping:v1
+    build: ./shipping
+    image: learninghariaws/shipping:v1
     container_name: shipping
     depends_on:
     - mysql
     - cart
   payment:
-    image: payment:v1
+    build: ./payment
+    image: learninghariaws/payment:v1
     container_name: payment
     depends_on:
      - rabbitmq
      - cart
      - user
   frontend:
-    image: frontend:v1
+    build: ./frontend
+    image: learninghariaws/frontend:v1
     container_name: frontend
     ports:
       - 80:80
@@ -60,7 +69,8 @@ services:
       - payment
 
   catalogue:
-    image: catalogue:v1
+    build: ./catalogue
+    image: learninghariaws/catalogue:v1
     container_name: catalogue
     depends_on:
      - mongodb
