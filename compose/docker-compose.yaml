@@ -1,7 +1,7 @@
 services:
   mongodb:
     # build: ./mongodb
-    # image:  mongodb:v1
+    image: mongodb:v1
     container_name: mongodb
     volumes:
       - mongodb:/data/db
@@ -9,7 +9,7 @@ services:
     # build:
     #   context: ./mysql
     #   dockerfile: Dockerfile
-    # image:  mysql:v1
+    image: mysql:v1
     container_name: mysql
     volumes:
       - mysql:/var/lib/mysql
