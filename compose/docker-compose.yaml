@@ -1,16 +1,18 @@
 services:
   mongodb:
-   build: ./mongodb
-   image: learninghariaws/mongodb:v1
-   container_name: mongodb
-   volumes:
-     - mongodb:/data/db
+    build: ./mongodb
+    image: learninghariaws/mongodb:v1
+    container_name: mongodb
+    volumes:
+      - mongodb:/data/db
   mysql:
-   build: ./mysql
-   image: learninghariaws/mysql:v1
-   container_name: mysql
-   volumes:
-     - mysql:/var/lib/mysql
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile
+    image: learninghariaws/mysql:v1
+    container_name: mysql
+    volumes:
+      - mysql:/var/lib/mysql
   redis:
     build: ./redis
     image: redis:7.0
@@ -24,37 +26,37 @@ services:
     volumes:
       - rabbitmq:/var/lib/rabbitmq
     environment:
-       RABBITMQ_DEFAULT_USER: roboshop 
-       RABBITMQ_DEFAULT_PASS: roboshop123
+      RABBITMQ_DEFAULT_USER: roboshop
+      RABBITMQ_DEFAULT_PASS: roboshop123
   user:
     build: ./user
     image: learninghariaws/user:v1
     container_name: user
     depends_on:
-     - mongodb
-     - redis
+      - mongodb
+      - redis
   cart:
-   build: ./cart
-   image: learninghariaws/cart:v1
-   container_name: cart
-   depends_on:
-   - catalogue
-   - redis
+    build: ./cart
+    image: learninghariaws/cart:v1
+    container_name: cart
+    depends_on:
+      - catalogue
+      - redis
   shipping:
     build: ./shipping
     image: shipping:v1
     container_name: shipping
     depends_on:
-    - mysql
-    - cart
+      - mysql
+      - cart
   payment:
     build: ./payment
     image: learninghariaws/payment:v1
     container_name: payment
     depends_on:
-     - rabbitmq
-     - cart
-     - user
+      - rabbitmq
+      - cart
+      - user
   frontend:
     build: ./frontend
     image: learninghariaws/frontend:v1
@@ -73,17 +75,16 @@ services:
     image: learninghariaws/catalogue:v1
     container_name: catalogue
     depends_on:
-     - mongodb
+      - mongodb
 
 networks:
-  default: 
+  default:
     driver: bridge
     name: roboshop
     external: false # if you allready created a network by using create network you can set as true.If not proivde the value  as false
 
 volumes:
-   rabbitmq:
-   redis:
-   mysql:
-   mongodb:
-
+  rabbitmq:
+  redis:
+  mysql:
+  mongodb:
