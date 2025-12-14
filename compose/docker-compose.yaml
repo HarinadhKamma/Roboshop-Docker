@@ -1,30 +1,30 @@
 services:
   mongodb:
-    build: ./mongodb
-    image: learninghariaws/mongodb:v1
+    # build: ./mongodb
+    # image:  mongodb:v1
     container_name: mongodb
     volumes:
       - mongodb:/data/db
   mysql:
-    build:
-      context: ./mysql
-      dockerfile: Dockerfile
-    image: learninghariaws/mysql:v1
+    # build:
+    #   context: ./mysql
+    #   dockerfile: Dockerfile
+    # image:  mysql:v1
     container_name: mysql
     volumes:
       - mysql:/var/lib/mysql
   redis:
-    build:
-      context: ./redis
-      dockerfile: Dockerfile
+    # build:
+    #   context: ./redis
+    #   dockerfile: Dockerfile
     image: redis:7.0
     container_name: redis
     volumes:
       - redis:/data
   rabbitmq:
-    build:
-      context: ./rabbitmq
-      dockerfile: Dockerfile
+    # build:
+    #   context: ./rabbitmq
+    #   dockerfile: Dockerfile
     image: rabbitmq:3
     container_name: rabbitmq
     volumes:
@@ -33,47 +33,47 @@ services:
       RABBITMQ_DEFAULT_USER: roboshop
       RABBITMQ_DEFAULT_PASS: roboshop123
   user:
-    build:
-      context: ./user
-      dockerfile: Dockerfile
-    image: learninghariaws/user:v1
+    # build:
+    #   context: ./user
+    #   dockerfile: Dockerfile
+    image: user:v1
     container_name: user
     depends_on:
       - mongodb
       - redis
   cart:
-    build:
-      context: ./cart
-      dockerfile: Dockerfile
-    image: learninghariaws/cart:v1
+    # build:
+    #   context: ./cart
+    #   dockerfile: Dockerfile
+    image: cart:v1
     container_name: cart
     depends_on:
       - catalogue
       - redis
   shipping:
-    build:
-      context: ./shipping
-      dockerfile: Dockerfile
-    image: learninghariaws/shipping:v1
+    # build:
+    #   context: ./shipping
+    #   dockerfile: Dockerfile
+    image: shipping:v1
     container_name: shipping
     depends_on:
       - mysql
       - cart
   payment:
-    build:
-      context: ./payment
-      dockerfile: Dockerfile
-    image: learninghariaws/payment:v1
+    # build:
+    #   context: ./payment
+    #   dockerfile: Dockerfile
+    image: payment:v1
     container_name: payment
     depends_on:
       - rabbitmq
       - cart
       - user
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    image: learninghariaws/frontend:v1
+    # build:
+    #   context: ./frontend
+    #   dockerfile: Dockerfile
+    image: frontend:v1
     container_name: frontend
     ports:
       - 80:80
@@ -85,10 +85,10 @@ services:
       - payment
 
   catalogue:
-    build:
-      context: ./catalogue
-      dockerfile: Dockerfile
-    image: learninghariaws/catalogue:v1
+    # build:
+    #   context: ./catalogue
+    #   dockerfile: Dockerfile
+    image: catalogue:v1
     container_name: catalogue
     depends_on:
       - mongodb
